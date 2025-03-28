@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2 class="text-center" style="margin-bottom: 30px; color: #00796b; font-size: 36px;">Your Recommended Projects</h2>
+
+<div style="max-width: 900px; margin: 0 auto;">
+    {% if recommended_projects %}
+        {% for project in recommended_projects %}
+            <div class="project-card" style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); padding: 25px; margin-bottom: 30px; border-radius: 15px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); color: white;">
+                <h3 style="margin-top: 0; font-size: 28px;">{{ project.title }}</h3>
+                <p style="font-size: 16px; line-height: 1.6;">{{ project.description|truncatewords:30 }}</p>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                    <span class="badge" style="background-color: #ffeb3b; color: #333; padding: 8px 15px; border-radius: 20px; font-size: 14px;">Recommended</span>
+                    <a href="{% url 'project_detail' project.id %}" class="btn btn-light" style="padding: 10px 20px; border-radius: 20px; background-color: #ffffff; color: #00796b; font-weight: bold; text-transform: uppercase; text-decoration: none;">View & Sign Up</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; font-size: 18px; color: #666;">No projects match your profile at the moment. Please check back later!</p>
+    {% endif %}
+</div>
+
+<style>
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-light {
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .btn-light:hover {
+        background-color: #00796b;
+        color: #ffffff;
+    }
+</style>
+{% endblock %}

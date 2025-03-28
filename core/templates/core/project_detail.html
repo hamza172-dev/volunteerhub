@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>{{ project.title }}</h2>
+<p>{{ project.description }}</p>
+
+<h3>Volunteers</h3>
+<ul>
+    {% for volunteer in volunteers %}
+    <li>
+        {{ volunteer.username }}
+        {% if is_organization_or_admin %}
+        <a href="{% url 'remove_volunteer_from_project' project.id volunteer.id %}" class="button">Remove</a>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- Only show the sign-up button if the user is a volunteer and not an organization -->
+{% if not is_organization_or_admin and not is_volunteered %}
+<form method="post" action="{% url 'volunteer_for_project' project.id %}">
+    {% csrf_token %}
+    <button type="submit" class="button">Sign Up</button>
+</form>
+{% elif is_volunteered %}
+<form method="post" action="{% url 'remove_volunteer_from_project' project.id request.user.id %}">
+    {% csrf_token %}
+    <button type="submit" class="button">Cancel Sign Up</button>
+</form>
+{% endif %}
+{% endblock %}

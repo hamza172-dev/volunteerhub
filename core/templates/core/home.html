@@ -1,0 +1,247 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="homepage-container">
+    <!-- Welcome and Impact Section -->
+    <section class="welcome-impact-section">
+        <div class="welcome-content">
+            <h1>Welcome to Volunteer Hub</h1>
+            <p>Your gateway to making a difference. Discover projects, join causes, and contribute your skills to the community.</p>
+        </div>
+        <div class="impact-statistics">
+            <h2>Our Impact</h2>
+            <div class="statistics-grid">
+                <div class="stat-card">
+                    <h3>Total Projects</h3>
+                    <p>{{ total_projects }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Volunteers</h3>
+                    <p>{{ total_volunteers }}</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Hours Volunteered</h3>
+                    <p>{{ total_hours }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section class="featured-projects-section">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatewords:15 }}</p>
+                </div>
+                <div class="organization-details">
+                    {% if project.created_by.profile.profile_picture %}
+                        <img src="{{ project.created_by.profile.profile_picture.url }}" alt="{{ project.created_by.profile.organization_name }}" class="organization-image">
+                    {% endif %}
+                    <div>
+                        <strong>
+                            {% if project.created_by.profile.organization_name %}
+                                {{ project.created_by.profile.organization_name }}
+                            {% else %}
+                                {{ project.created_by.username }}
+                            {% endif %}
+                        </strong>
+                    </div>
+                </div>
+                <div class="project-footer">
+                    <a href="{% url 'project_detail' project.id %}" class="button">Learn More</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+
+<style>
+/* General Styles */
+.homepage-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Welcome and Impact Section */
+.welcome-impact-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.welcome-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.welcome-content h1 {
+    font-size: 36px;
+    color: #00796b;
+    margin-bottom: 10px;
+}
+
+.welcome-content p {
+    font-size: 16px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.impact-statistics {
+    flex: 1;
+}
+
+.impact-statistics h2 {
+    font-size: 28px;
+    color: #00796b;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card h3 {
+    font-size: 16px;
+    color: #ef6c00;
+    margin-bottom: 5px;
+}
+
+.stat-card p {
+    font-size: 24px;
+    color: #e65100;
+}
+
+/* Featured Projects Section */
+.featured-projects-section {
+    margin-bottom: 20px;
+}
+
+.featured-projects-section h2 {
+    font-size: 28px;
+    color: #00796b;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.project-card {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project-content h3 {
+    font-size: 18px;
+    color: #00796b;
+    margin-bottom: 5px;
+}
+
+.project-content p {
+    color: #666666;
+    flex-grow: 1;
+    font-size: 14px;
+}
+
+.organization-details {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.organization-details img.organization-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.organization-details strong {
+    font-size: 16px;
+    color: #004d40;
+}
+
+.project-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.project-card .button {
+    color: #ffffff;
+    background-color: #00796b;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.project-card .button:hover {
+    background-color: #004d40;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .welcome-impact-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .welcome-content,
+    .impact-statistics {
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .statistics-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .projects-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+</style>
+
+{% endblock %}

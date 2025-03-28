@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Send Message</h2>
+<div class="message-form-container">
+    <form method="post" class="message-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-button">Send</button>
+    </form>
+</div>
+
+<style>
+    .message-form-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .message-form h2 {
+        margin-bottom: 20px;
+        font-size: 2em;
+        text-align: center;
+        color: #333;
+    }
+
+    .message-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .message-form p {
+        margin-bottom: 15px;
+    }
+
+    .submit-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+        align-self: center; /* Center the button */
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "core/base.html" %}
+
+{% block title %}
+    Analytics
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Analytics Dashboard</h2>
+
+    <!-- KPI Cards -->
+    <div class="row text-center mb-5">
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Total Volunteer Hours</h5>
+                    <h3 class="card-text text-primary">{{ metrics.total_hours }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Total Projects</h5>
+                    <h3 class="card-text text-success">{{ metrics.total_projects }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Ongoing Projects</h5>
+                    <h3 class="card-text text-warning">{{ metrics.ongoing_projects }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Completion Status -->
+    <div class="row mb-5">
+        <div class="col-md-6 mx-auto">
+            <h4 class="text-center">Project Completion Status</h4>
+            <ul class="list-group mt-3">
+                <li class="list-group-item">
+                    <strong>Total Projects:</strong> {{ project_status.details.total_projects }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Ongoing Projects:</strong> {{ project_status.details.ongoing_projects }}
+                </li>
+                <li class="list-group-item">
+                    <strong>Completed Projects:</strong> {{ project_status.details.completed_projects }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

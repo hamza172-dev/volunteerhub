@@ -1,0 +1,35 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Admin Dashboard</h2>
+    
+    <h3>Projects</h3>
+    <ul>
+        {% for project in projects %}
+        <li>
+            <strong>{{ project.title }}</strong> - {{ project.description }}
+            <a href="{% url 'edit_project' project.id %}" class="button">Edit</a>
+            <a href="{% url 'delete_project' project.id %}" class="button">Delete</a>
+            <a href="{% url 'project_detail' project.id %}" class="button">View Volunteers</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Volunteers</h3>
+    <ul>
+        {% for volunteer in volunteers %}
+        <li>{{ volunteer.username }} - {{ volunteer.email }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Announcements</h3>
+    <ul>
+        {% for announcement in announcements %}
+        <li>{{ announcement.title }} - {{ announcement.content }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'post_announcement' %}" class="button">Post Announcement</a>
+</div>
+{% endblock %}

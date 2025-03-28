@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div id="calendar" style="width: 100%; max-width: 1200px; margin: auto;"></div>
+
+<style>
+    .fc .fc-daygrid-event .fc-event-title {
+        font-size: 12px;
+    }
+
+    .fc .fc-toolbar-title {
+        font-size: 18px;
+    }
+
+    .fc-event.fc-event-start-soon {
+        background-color: #90EE90; /* Light Green */
+        border-color: #2ECC71; /* Darker Green */
+    }
+
+    .fc-event.fc-event-end-soon {
+        background-color: #FF6347; /* Light Red */
+        border-color: #E74C3C; /* Darker Red */
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            height: 'auto',
+            events: '/calendar_data/',
+            eventClick: function(info) {
+                // Use the correct URL pattern for project details
+                window.location.href = '/projects/' + info.event.id + '/';
+            },
+            
+            
+            eventContent: function(info) {
+                const daysLeft = info.event.extendedProps.daysLeft ?? 'N/A';
+            
+                return {
+                    html: `<div style="text-align: center; padding: 5px;">
+                            <span style="font-weight: bold; font-size: 14px;">${info.event.title}</span>
+                            <br>
+                            <span style="
+                                font-size: 12px; 
+                                font-weight: bold; 
+                                color: white; 
+                                background-color: #555; 
+                                padding: 2px 5px; 
+                                border-radius: 5px;">
+                                ${daysLeft} ${daysLeft === 1 ? 'day' : 'days'} left
+                            </span>
+                        </div>`
+                };
+            },
+            
+            
+            eventClassNames: function(info) {
+                // Apply custom classes based on start or end proximity
+                if (info.event.extendedProps.isStartSoon) {
+                    return ['fc-event-start-soon'];
+                } else if (info.event.extendedProps.isEndSoon) {
+                    return ['fc-event-end-soon'];
+                }
+            }
+        });
+
+        calendar.render();
+    });
+</script>
+{% endblock %}

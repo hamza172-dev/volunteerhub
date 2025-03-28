@@ -1,0 +1,139 @@
+{% extends "core/base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="register-container">
+    <div class="register-header">
+        <h2>Create an Account</h2>
+        <p>It's quick and easy.</p>
+    </div>
+    <form method="post" class="register-form">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.user_type.label_tag }}
+                {{ form.user_type }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.skills.label_tag }}
+                {{ form.skills }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.interests.label_tag }}
+                {{ form.interests }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                {{ form.availability.label_tag }}
+                {{ form.availability }}
+            </div>
+        </div>
+        <button type="submit" class="register-button">Sign Up</button>
+    </form>
+</div>
+
+<style>
+    /* Container styling */
+    .register-container {
+        max-width: 500px;
+        margin: 5% auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Header styling */
+    .register-header h2 {
+        margin-bottom: 10px;
+        color: #333;
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    .register-header p {
+        margin-bottom: 20px;
+        color: #606770;
+        font-size: 16px;
+    }
+
+    /* Form styling */
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Row styling */
+    .form-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    /* Group styling */
+    .form-group {
+        width: 100%;
+        margin-right: 10px;
+    }
+
+    .form-group:last-child {
+        margin-right: 0;
+    }
+
+    /* Input styling */
+    .register-form input,
+    .register-form select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    /* Button styling */
+    .register-button {
+        width: 100%;
+        padding: 12px;
+        background-color: #42b72a;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .register-button:hover {
+        background-color: #36a420;
+    }
+</style>
+{% endblock %}

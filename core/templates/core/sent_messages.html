@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Sent Messages</h2>
+<ul>
+    {% for message in messages %}
+    <li>
+        <a href="{% url 'view_message' message.pk %}">{{ message.subject }}</a>
+        <p>To: {{ message.receiver.username }} | {{ message.timestamp }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,280 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Dashboard Container */
+    .dashboard-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header Styling */
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 34px;
+        color: #004d40;
+        font-weight: 700;
+        padding-bottom: 10px;
+    }
+
+    /* Top Buttons */
+    .dashboard-actions {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        gap: 20px;
+    }
+
+    .dashboard-actions .button {
+        padding: 12px 24px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #00796b;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .dashboard-actions .button:hover {
+        background-color: #004d40;
+        transform: translateY(-3px);
+    }
+
+    /* Two-Column Layout */
+    .dashboard-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 30px;
+    }
+
+    /* Card Styling */
+    .dashboard-card {
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* Left Column (Projects) */
+    .projects-card {
+        grid-column: 1 / 2;
+    }
+
+    /* Right Column (Volunteers) */
+    .volunteers-card {
+        grid-column: 2 / 3;
+        background-color: #e0f7fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .volunteers-card-header {
+        font-size: 22px;
+        color: #004d40;
+        margin-bottom: 20px;
+        font-weight: 600;
+        border-bottom: 2px solid #004d40;
+        padding-bottom: 10px;
+    }
+
+    .project-volunteers {
+        margin-bottom: 25px;
+    }
+
+    .project-volunteers h4 {
+        font-size: 18px;
+        color: #004d40;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .volunteers-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .volunteer-item {
+        background-color: #ffffff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .volunteer-item:hover {
+        transform: translateY(-3px);
+        background-color: #b2dfdb;
+    }
+
+    .volunteer-name {
+        font-size: 16px;
+        color: #004d40;
+        font-weight: 500;
+    }
+
+    .remove-volunteer-button {
+        padding: 8px 16px;
+        font-size: 14px;
+        color: #ffffff;
+        background-color: #00796b;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .remove-volunteer-button:hover {
+        background-color: #004d40;
+    }
+
+    /* Card Header */
+    .dashboard-card-header {
+        font-size: 20px;
+        color: #004d40;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .dashboard-card-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .dashboard-card-content ul li {
+        margin-bottom: 12px;
+    }
+
+    .dashboard-card-content ul li a {
+        text-decoration: none;
+        color: #004d40;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .dashboard-card-content ul li a:hover {
+        color: #00796b;
+    }
+
+    /* Feedback Section */
+    .feedback-section {
+        margin-top: 20px;
+    }
+
+    .feedback-header {
+        font-size: 18px;
+        color: #004d40;
+        margin-bottom: 10px;
+        font-weight: 500;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
+    .feedback-item {
+        background-color: #f0f0f0;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .feedback-item small {
+        color: #00796b;
+    }
+</style>
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-header">
+        <h2>Organization Dashboard</h2>
+    </div>
+
+    <!-- Top Buttons -->
+    <div class="dashboard-actions">
+        <a href="{% url 'create_project' %}" class="button">Create New Project</a>
+        <a href="{% url 'analytics' %}" class="button">View Analytics</a>
+    </div>
+
+    <div class="dashboard-content">
+        <!-- Left Column: Projects -->
+        <div class="dashboard-card projects-card">
+            <div class="dashboard-card-header">
+                Your Projects
+            </div>
+            <div class="dashboard-card-content">
+                <ul>
+                    {% for project in organization_projects %}
+                    <li>
+                        <strong>{{ project.title }}</strong> - {{ project.description|truncatewords:20 }}
+                        {% if project.end_date >= today %}
+                            <a href="{% url 'edit_project' project.id %}" class="button">Edit</a>
+                            <a href="{% url 'log_volunteer_hours' project.id %}" class="button">Log Volunteer Hours</a>
+                        {% else %}
+                            <span>Project Completed</span>
+                        {% endif %}
+                    </li>
+
+                    <!-- Feedback Section for Each Project -->
+                    {% if project.feedback_set.all %}
+                    <div class="feedback-section">
+                        <div class="feedback-header">Volunteer Feedback</div>
+                        {% for feedback in project.feedback_set.all %}
+                        <div class="feedback-item">
+                            <p>{{ feedback.content }}</p>
+                            <small>by {{ feedback.volunteer.username }}</small>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No feedback available for this project.</p>
+                    {% endif %}
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column: Manage Volunteers -->
+        <div class="dashboard-card volunteers-card">
+            <div class="volunteers-card-header">
+                Manage Volunteers
+            </div>
+
+            {% for project in organization_projects %}
+            <div class="project-volunteers">
+                <h4>{{ project.title }}</h4>
+                <ul class="volunteers-list">
+                    {% for volunteer in project.volunteers.all %}
+                    <li class="volunteer-item">
+                        <span class="volunteer-name">{{ volunteer.username }}</span>
+                        {% if project.end_date >= today %}
+                            <a href="{% url 'remove_volunteer_from_project' project.id volunteer.id %}" class="remove-volunteer-button">Remove</a>
+                        {% else %}
+                            <span>Project Completed</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

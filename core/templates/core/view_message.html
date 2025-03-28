@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>{{ message.subject }}</h2>
+<p>From: {{ message.sender.username }}</p>
+<p>To: {{ message.receiver.username }}</p>
+<p>{{ message.timestamp }}</p>
+<p>{{ message.content }}</p>
+
+<h3>Reply</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send Reply</button>
+</form>
+
+<a href="{% url 'inbox' %}">Back to Inbox</a>
+{% endblock %}

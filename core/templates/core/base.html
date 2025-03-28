@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+
+    <!-- FullCalendar CSS -->
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+<!-- FullCalendar JS -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+
+
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Header and navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between; /* Align left and right navigation items */
+            align-items: center; /* Center items vertically */
+            padding: 10px 20px;
+            background-color: #008080; /* Teal background */
+        }
+
+        /* Navigation links */
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-right: 15px; /* Space between navigation items */
+            position: relative; /* For badge positioning */
+        }
+
+        nav ul li a {
+            font-size: 16px;
+            padding: 8px 15px;
+            text-decoration: none;
+            color: white;
+            background-color: #008080;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        nav ul li a:hover {
+            background-color: #006666; /* Darker teal on hover */
+        }
+
+        /* Badge styling for unread messages */
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 50%;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* Logout button */
+        .logout-form button {
+            font-size: 16px;
+            color: #fff;
+            background-color: #008080;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+
+        .logout-form button:hover {
+            background-color: #006666;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #f9f9f9;
+            color: #555;
+            margin-top: 20px;
+        }
+    </style>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Volunteer Hub{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Volunteer Hub</h1>
+        <nav>
+            <!-- Left Navigation -->
+            <ul class="nav-left">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'project_list' %}">Projects</a></li>
+                <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'inbox' %}" class="position-relative">
+                            Inbox
+                            {% if unread_messages_count > 0 %}
+                                <span class="badge">{{ unread_messages_count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li><a href="{% url 'send_message' %}">Send Message</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    {% if user.profile.is_volunteer %}
+                        <li><a href="{% url 'dashboard_volunteer' %}">Dashboard</a></li>
+                        <li><a href="{% url 'recommend_projects' %}">Recommended Projects</a></li>
+                    {% elif user.profile.is_organization %}
+                        <li><a href="{% url 'dashboard_organization' %}">Dashboard</a></li>
+                    {% elif user.profile.is_admin %}
+                        <li><a href="{% url 'dashboard_admin' %}">Dashboard</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'analytics' %}">Analytics</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                {% endif %}
+            </ul>
+
+            <!-- Right Navigation -->
+            {% if user.is_authenticated %}
+                <ul class="nav-right">
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" class="logout-form">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 Volunteer Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>

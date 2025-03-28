@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Log Volunteer Hours</h2>
+<form method="post" id="log-hours-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="button">Log Hours</button>
+</form>
+<script>
+    function setEventDate() {
+        const projectSelect = document.getElementById('id_project');
+        const selectedProjectId = projectSelect.value;
+        const eventDateField = document.getElementById('id_event_date');
+        
+        if (selectedProjectId) {
+            fetch(`/get_project_date/${selectedProjectId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    eventDateField.value = data.start_date;
+                });
+        }
+    }
+</script>
+{% endblock %}

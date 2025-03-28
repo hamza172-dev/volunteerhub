@@ -1,0 +1,204 @@
+{% extends 'core/base.html' %}
+{% load static %} 
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-picture">
+            {% if request.user.profile.profile_picture %}
+                <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+                <img src="{% static 'default_profile_pic.jpg' %}" alt="Default Profile Picture" class="profile-pic">
+            {% endif %}
+        </div>
+        <div class="profile-header-details">
+            <h2>{{ request.user.username }}</h2>
+            <p class="profile-email">{{ request.user.email }}</p>
+        </div>
+    </div>
+
+    <!-- Profile Details -->
+    <div class="profile-details-container">
+        <div class="profile-details">
+            <h3>Contact Information</h3>
+            <p><strong>Phone Number:</strong> {{ request.user.profile.phone_number }}</p>
+            <p><strong>Address:</strong> {{ request.user.profile.address }}</p>
+            {% if request.user.profile.is_organization %}
+                <p><strong>Organization Name:</strong> {{ request.user.profile.organization_name }}</p>
+            {% endif %}
+            {% if request.user.profile.is_volunteer and request.user.volunteerprofile %}
+                <h3>Volunteer Details</h3>
+                <p><strong>Skills:</strong> {{ request.user.volunteerprofile.skills }}</p>
+                <p><strong>Availability:</strong> {{ request.user.volunteerprofile.availability }}</p>
+                <p><strong>Interests:</strong> {{ request.user.volunteerprofile.interests }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Update Profile Section -->
+    <div class="update-profile-section">
+        <h2>Update Profile</h2>
+        <form method="post" enctype="multipart/form-data" class="update-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="profile_picture">Profile Picture</label>
+                <input type="file" name="profile_picture" id="profile_picture">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" value="{{ request.user.username }}">
+            </div>
+            <div class="form-group">
+                <label for="phone_number">Phone Number</label>
+                <input type="text" name="phone_number" id="phone_number" value="{{ request.user.profile.phone_number }}">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" value="{{ request.user.profile.address }}">
+            </div>
+            {% if request.user.profile.is_organization %}
+            <div class="form-group">
+                <label for="organization_name">Organization Name</label>
+                <input type="text" name="organization_name" id="organization_name" value="{{ request.user.profile.organization_name }}">
+            </div>
+            {% endif %}
+            {% if request.user.profile.is_volunteer and request.user.volunteerprofile %}
+            <div class="form-group">
+                <label for="skills">Skills</label>
+                <textarea name="skills" id="skills">{{ request.user.volunteerprofile.skills }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="availability">Availability</label>
+                <textarea name="availability" id="availability">{{ request.user.volunteerprofile.availability }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="interests">Interests</label>
+                <textarea name="interests" id="interests">{{ request.user.volunteerprofile.interests }}</textarea>
+            </div>
+            {% endif %}
+            <button type="submit" class="button">Update Profile</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* Profile Container Styling */
+    .profile-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Profile Header Styling */
+    .profile-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .profile-picture {
+        margin-right: 20px;
+    }
+
+    .profile-pic {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #008080;
+    }
+
+    .profile-header-details {
+        flex-grow: 1;
+    }
+
+    .profile-header-details h2 {
+        margin: 0;
+        font-size: 28px;
+        color: #333;
+    }
+
+    .profile-email {
+        color: #666;
+    }
+
+    /* Profile Details Styling */
+    .profile-details-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    .profile-details {
+        width: 100%; /* Adjusted width to use full space */
+        margin-right: 15px; /* Added margin between sections */
+    }
+
+    .profile-details h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+        color: #008080;
+    }
+
+    .profile-details p {
+        margin: 5px 0;
+        color: #444;
+    }
+
+    /* Update Profile Section Styling */
+    .update-profile-section {
+        margin-top: 40px;
+    }
+
+    .update-profile-section h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+        color: #008080;
+    }
+
+    .update-form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .update-form .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .update-form .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .update-form .form-group input,
+    .update-form .form-group textarea {
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        width: 100%;
+    }
+
+    .update-form .button {
+        background-color: #008080;
+        color: #ffffff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .update-form .button:hover {
+        background-color: #006666;
+    }
+</style>
+{% endblock %}

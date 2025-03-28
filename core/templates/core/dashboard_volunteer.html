@@ -1,0 +1,195 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    /* Dashboard Container */
+    .dashboard-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Header Styling */
+    .dashboard-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 28px;
+        color: #00796b;
+        border-bottom: 2px solid #00796b;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    /* Cards Layout */
+    .dashboard-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    /* Card Styling */
+    .dashboard-card {
+        background-color: #f4f4f4;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s;
+    }
+
+    .dashboard-card:hover {
+        background-color: #e0f7fa;
+    }
+
+    /* Card Header */
+    .dashboard-card-header {
+        font-size: 20px;
+        color: #00796b;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+    }
+
+    /* Card Content */
+    .dashboard-card-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .dashboard-card-content ul li {
+        margin-bottom: 10px;
+    }
+
+    .dashboard-card-content ul li a {
+        text-decoration: none;
+        color: #00796b;
+        font-weight: bold;
+    }
+
+    .dashboard-card-content ul li a:hover {
+        text-decoration: underline;
+    }
+
+    /* Footer with Button */
+    .dashboard-footer {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .button {
+        padding: 12px 24px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #009688;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .button:hover {
+        background-color: #00796b;
+        transform: scale(1.05);
+    }
+
+    /* Specific Style for Provide Feedback Button */
+    .feedback-button {
+        margin-left: 10px;
+        color: #ffffff;
+        background-color: #22cdbb;
+    }
+
+    .feedback-button:hover {
+        background-color: #1ea998;
+    }
+</style>
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-header">
+        <h2>Volunteer Dashboard</h2>
+    </div>
+
+    <div class="dashboard-cards">
+        <!-- Upcoming Projects -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                Upcoming Projects
+            </div>
+            <div class="dashboard-card-content">
+                <ul>
+                    {% for project in upcoming_projects %}
+                    <li>
+                        <a href="{% url 'project_detail' project.id %}">{{ project.title }}</a>
+                    </li>
+                    {% empty %}
+                    <p>No upcoming projects.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Previous Projects -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                Previous Projects
+            </div>
+            <div class="dashboard-card-content">
+                <ul>
+                    {% for item in previous_projects_with_feedback %}
+                    <li>
+                        <a href="{% url 'project_detail' item.project.id %}">{{ item.project.title }}</a>
+                        {% if not item.has_feedback %}
+                            {% if item.project.end_date < today %}
+                                <a href="{% url 'submit_feedback' %}?project_id={{ item.project.id }}" class="button feedback-button">Provide Feedback</a>
+                            {% else %}
+                                <span class="text-muted">Feedback available after project ends</span>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                    {% empty %}
+                    <p>No previous projects.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Your Volunteer Hours -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                Your Volunteer Hours
+            </div>
+            <div class="dashboard-card-content">
+                <ul>
+                    {% for hours in volunteer_hours %}
+                    <li>{{ hours.project.title }} - {{ hours.hours }} hours</li>
+                    {% empty %}
+                    <p>No hours logged yet.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="dashboard-card">
+            <div class="dashboard-card-header">
+                Your Feedback
+            </div>
+            <div class="dashboard-card-content">
+                <ul>
+                    {% for feedback in volunteer_feedback %}
+                    <li>{{ feedback.project.title }} - {{ feedback.content|truncatewords:10 }}</li>
+                    {% empty %}
+                    <p>No feedback submitted yet.</p>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-footer">
+        <a href="{% url 'analytics' %}" class="button">View Analytics</a>
+    </div>
+</div>
+{% endblock %}

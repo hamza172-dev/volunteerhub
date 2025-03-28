@@ -1,0 +1,259 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f8ff; /* AliceBlue */
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Header Styles */
+header {
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Navigation Styles */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul.nav-left {
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: 20px;
+}
+
+nav ul.nav-right {
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+nav ul li form {
+    display: inline;
+}
+
+/* Logout Button Styles */
+.logout-form button {
+    background-color: #ff4b4b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.logout-form button:hover {
+    background-color: #ff1c1c;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+/* Form Container Styles */
+.form-container {
+    background: #ffffff;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.form-container h2 {
+    margin-top: 0;
+    font-size: 2em;
+    color: #20b2aa; /* Bright Sea Green */
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container form input,
+.form-container form textarea,
+.form-container form button {
+    margin-bottom: 15px;
+    padding: 12px;
+    font-size: 1em;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.form-container form button {
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.form-container form button:hover {
+    background-color: #189d8a;
+}
+
+/* Dashboard Styles */
+.dashboard {
+    background: #ffffff;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+}
+
+.dashboard h2 {
+    font-size: 2.5em;
+    color: #20b2aa; /* Bright Sea Green */
+}
+
+.dashboard h3 {
+    font-size: 2em;
+    color: #333;
+}
+
+.dashboard ul {
+    list-style: none;
+    padding: 0;
+}
+
+.dashboard ul li {
+    background: #e0f7fa; /* Light Cyan */
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard ul li a.button {
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    display: inline-block;
+}
+
+.dashboard ul li a.button:hover {
+    background-color: #189d8a;
+}
+
+/* Home Page Styles */
+.home-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.home-container h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: #20b2aa; /* Bright Sea Green */
+}
+
+.home-container p {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.home-container .button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+}
+
+.home-container .button:hover {
+    background-color: #189d8a;
+}
+
+/* Button Styles */
+.button {
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: #20b2aa; /* Bright Sea Green */
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.button:hover {
+    background-color: #189d8a;
+}
+
+/* Additional Styles */
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.card h3 {
+    color: #20b2aa; /* Bright Sea Green */
+    margin-top: 0;
+}
+
+.card p {
+    color: #333;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

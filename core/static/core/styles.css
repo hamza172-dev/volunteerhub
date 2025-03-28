@@ -1,0 +1,205 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e0f7fa; /* Light turquoise background */
+    color: #006064; /* Dark turquoise text */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #004d40; /* Darker turquoise for header */
+    color: #ffffff; /* White text */
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background for content */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    background-color: #009688; /* Medium turquoise */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button:hover {
+    background-color: #00796b; /* Darker turquoise on hover */
+}
+
+h2 {
+    color: #004d40; /* Darker turquoise for headings */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #b2dfdb; /* Light turquoise for list items */
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form p {
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #004d40; /* Dark turquoise border */
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"],
+button[type="submit"] {
+    background-color: #009688; /* Medium turquoise */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    background-color: #00796b; /* Darker turquoise on hover */
+}
+
+notification-list {
+    margin-top: 10px;
+    padding: 0;
+    list-style-type: none;
+}
+
+notification-list li {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-text {
+    max-width: 60%;
+}
+
+.welcome-text h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.welcome-text p {
+    font-size: 1.2rem;
+    color: #666;
+    margin: 10px 0 20px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    background-color: #20B2AA;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.cta-button:hover {
+    background-color: #2E8B57;
+}
+
+.welcome-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Statistics Section */
+.statistics {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #e0f7fa;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+.statistics h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.stat-cards {
+    display: flex;
+    justify-content: space-around;
+}
+
+.stat-card {
+    background-color: #20B2AA;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    font-weight: bold;
+}
+.stat-card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

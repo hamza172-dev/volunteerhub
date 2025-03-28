@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-4">Submit Feedback</h2>
+    <div class="card shadow-sm p-4">
+        <h4 class="text-center">{{ project.title }}</h4>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success">Submit Feedback</button>
+                <a href="{% url 'dashboard_volunteer' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

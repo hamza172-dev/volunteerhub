@@ -1,0 +1,175 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="project-list-container">
+    <h2 class="section-title">Ongoing Projects</h2>
+    <div class="project-grid">
+        {% for project in available_projects %}
+        <div class="project-card ongoing-project">
+            <div class="project-card-header">
+                <h3>{{ project.title }}</h3>
+            </div>
+            <div class="project-card-body">
+                <p>{{ project.description }}</p>
+                <p><strong>Start Date:</strong> {{ project.start_date }}</p>
+                <p><strong>End Date:</strong> {{ project.end_date }}</p>
+                
+                <!-- Organization Info -->
+                <div class="organization-info">
+                    {% if project.created_by.profile.profile_picture %}
+                        <img src="{{ project.created_by.profile.profile_picture.url }}" alt="{{ project.created_by.profile.organization_name }}" class="organization-image">
+                    {% endif %}
+                    <div>
+                        <p><strong>{{ project.created_by.profile.organization_name }}</strong></p>
+                    </div>
+                </div>
+
+                <div class="project-card-footer">
+                    {% if request.user in project.volunteers.all %}
+                        <p class="status-signed-up">You have already signed up for this project.</p>
+                    {% elif not request.user.profile.is_organization %}
+                        <form method="post" action="{% url 'volunteer_for_project' project.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="button sign-up-button">Sign Up</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2 class="section-title">Past Projects</h2>
+    <div class="project-grid">
+        {% for project in previous_projects %}
+        <div class="project-card past-project">
+            <div class="project-card-header">
+                <h3>{{ project.title }}</h3>
+            </div>
+            <div class="project-card-body">
+                <p>{{ project.description }}</p>
+                <p><strong>Start Date:</strong> {{ project.start_date }}</p>
+                <p><strong>End Date:</strong> {{ project.end_date }}</p>
+                
+                <!-- Organization Info -->
+                <div class="organization-info">
+                    {% if project.created_by.profile.profile_picture %}
+                        <img src="{{ project.created_by.profile.profile_picture.url }}" alt="{{ project.created_by.profile.organization_name }}" class="organization-image">
+                    {% endif %}
+                    <div>
+                        <p><strong>{{ project.created_by.profile.organization_name }}</strong></p>
+                    </div>
+                </div>
+
+                <div class="project-card-footer">
+                    <p class="status-completed">This project has been completed.</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .project-list-container {
+        padding: 20px;
+        background-color: #f7f9fc;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 24px;
+        color: #6a0dad; /* Deep purple */
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .project-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .project-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .project-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .project-card-header {
+        border-bottom: 2px solid #6a0dad; /* Deep purple */
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .project-card h3 {
+        margin: 0;
+        font-size: 20px;
+        color: #6a0dad; /* Deep purple */
+    }
+
+    .project-card-body p {
+        margin: 10px 0;
+        color: #333;
+    }
+
+    .organization-info {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .organization-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .project-card-footer {
+        margin-top: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .status-signed-up, .status-completed {
+        font-weight: bold;
+        color: #4b0082; /* Darker purple */
+        text-align: center;
+    }
+
+    .sign-up-button {
+        background-color: #6a0dad; /* Deep purple */
+        color: #ffffff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        max-width: 150px; /* Set a max width for uniformity */
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .sign-up-button:hover {
+        background-color: #4b0082; /* Darker purple */
+    }
+
+    .past-project {
+        background-color: #e0e0e0;
+    }
+</style>
+{% endblock %}
